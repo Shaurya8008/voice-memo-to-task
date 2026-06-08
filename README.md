@@ -1,65 +1,48 @@
-# Voice Memo to Task
+# Voice Memo to Task (MVP)
 
-A Next.js + TypeScript application that converts voice memos into actionable tasks.
+A full-stack Next.js application that captures voice memos, transcribes them, and extracts structured to-do items using Google Gemini AI.
 
 ## Features
-
-- Record voice memos
-- Transcribe speech to text
-- Convert transcriptions into tasks
-- Mark tasks as complete
-- Dark mode support
-- Responsive design
+- **Voice Recording**: Browser-native microphone integration with visual feedback.
+- **AI Task Extraction**: Google Gemini automatically parses complex sentences into distinct tasks with categories, priorities, and due dates.
+- **Premium UI**: Custom glassmorphism design with an interactive Light/Dark mode.
+- **Task Management**: Search, filter, edit, and complete tasks directly from the dashboard.
+- **Database Backed**: Securely stores all audio metadata, transcripts, and tasks via Supabase (PostgreSQL).
 
 ## Tech Stack
+- **Frontend**: Next.js 14 (App Router), React, vanilla CSS.
+- **Backend**: Supabase (Database, Auth, RLS).
+- **AI**: `@google/genai` (Gemini 2.5 Flash).
+- **Date Picking**: `react-datepicker`.
 
-- [Next.js 14](https://nextjs.org/) - React framework
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [React 18](https://react.dev/) - UI library
-- [Tailwind CSS](https://tailwindcss.com/) - Styling (optional, but recommended)
-- [PostgreSQL](https://www.postgresql.org/) - Database (schema provided)
+## Setup Instructions
 
-## Getting Started
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-1. Clone the repository
-2. Install dependencies:
+2. **Database Setup**
+   Ensure your Supabase project is running. Execute the SQL contained in `database_schema.sql` in your Supabase SQL editor to create the `users`, `voice_memos`, and `tasks` tables with proper Row Level Security (RLS) policies.
 
-```bash
-npm install
-```
+3. **Environment Variables**
+   Copy the example environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Fill in your Supabase URL, Anon Key, and Google Gemini API Key in `.env.local`.
 
-3. Set up the database:
-   - Create a PostgreSQL database
-   - Run the schema in `database_schema.sql`
-   - Set environment variables in `.env.local` (see below)
+4. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-4. Configure environment variables:
-   Create a `.env.local` file in the root:
+## Sample Test Transcripts
+Try speaking these phrases into the app to test the AI extraction:
+1. *"Remind me to buy groceries tomorrow at 5 PM."* (Should create 1 task, categorize as Personal, set due date for tomorrow at 17:00).
+2. *"I need to submit my AI assignment on Friday and also call Rahul tonight."* (Should create 2 separate tasks with different due dates).
+3. *"Schedule a high priority team sync for next Monday at 10 AM."* (Should detect priority as High, set date).
 
-```env
-DATABASE_URL="postgresql://user:password@localhost:5432/db_name"
-NEXTAUTH_SECRET="your-secret-key"
-# Add any other required keys (e.g., for transcription service)
-```
-
-5. Run the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Project Structure
-
-- `src/app` - Next.js app directory (pages, layouts, etc.)
-- `src/types` - TypeScript type definitions
-- `database_schema.sql` - SQL schema for PostgreSQL
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
+---
+*Built as a student project/MVP.*
