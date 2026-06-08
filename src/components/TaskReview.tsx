@@ -141,7 +141,7 @@ export default function TaskReview({ memo, initialTasks, onCancel, onSaveComplet
                   </label>
                   <DatePicker
                     selected={task.dueDate ? new Date(task.dueDate) : null}
-                    onChange={(date) => updateTask(index, 'dueDate', date ? date.toISOString() : undefined)}
+                    onChange={(date: Date | null) => updateTask(index, 'dueDate', date ? date.toISOString() : undefined)}
                     showTimeSelect
                     dateFormat="MMMM d, yyyy h:mm aa"
                     className="custom-datepicker"
