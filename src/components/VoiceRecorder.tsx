@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { VoiceMemo } from '@/types';
 
 type RecorderState = 'idle' | 'recording' | 'paused' | 'reviewing' | 'uploading' | 'processing';
 
