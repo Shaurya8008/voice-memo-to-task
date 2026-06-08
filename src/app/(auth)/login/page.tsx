@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -11,15 +13,14 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
-  const supabase = createClient()
+  const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ? createClient() : null
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
     
-    // Fallback if supabase URL is missing
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    if (!supabase) {
       alert("Mock Mode: Logged in successfully!")
       router.push('/')
       router.refresh()
